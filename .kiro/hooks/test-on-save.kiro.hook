@@ -1,0 +1,14 @@
+{
+  "enabled": true,
+  "name": "Run Tests For Changed Module",
+  "description": "Run the matching tests when source files are saved.",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": ["src/shockcast/**/*.py"]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Run the pytest tests corresponding to the changed module with `uv run pytest -q`. If none exist, propose and write them. Summarize failures briefly."
+  }
+}

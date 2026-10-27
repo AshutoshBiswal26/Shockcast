@@ -1,0 +1,14 @@
+{
+  "enabled": true,
+  "name": "Schema Sync",
+  "description": "Keep Pydantic models and SQL schema consistent.",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": ["db/schema.sql"]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "db/schema.sql changed. Check that ingestion code, Pydantic models and tests still match the schema. List and fix any mismatches."
+  }
+}

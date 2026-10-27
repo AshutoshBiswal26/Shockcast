@@ -1,0 +1,14 @@
+{
+  "enabled": true,
+  "name": "Leakage Check",
+  "description": "When a feature or model file changes, review it for look-ahead leakage.",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": ["src/shockcast/features/**/*.py", "src/shockcast/models/**/*.py"]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Review the changed file for time-series leakage: any feature using data after the forecast origin, unshifted rolling windows, or exogenous data not lagged by published_at. Report issues and ensure a leakage test exists in tests/."
+  }
+}

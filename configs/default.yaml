@@ -1,0 +1,34 @@
+seed: 42
+data:
+  m5_path: data/raw/m5
+  db_path: data/shockcast.duckdb
+  subsample_series: 200        # start small, scale up
+  geographies: [CA, TX, WI]
+backtest:
+  horizon: 28
+  stride: 28
+  n_origins: 8
+  quantiles: [0.05, 0.1, 0.25, 0.5, 0.75, 0.9, 0.95]
+models: [seasonal_naive, ets, lightgbm, chronos_zero_shot]
+ablation_variants:
+  - series_only
+  - plus_calendar_weather
+  - plus_attention
+  - plus_llm_events
+  - plus_regime_blend
+  - plus_conformal
+events:
+  llm_backend: ollama          # ollama | api
+  model: llama3.1:8b
+  prompt_version: v1
+  max_retries: 2
+conformal:
+  nominal_levels: [0.8, 0.9]
+  gamma: 0.005
+regime:
+  bocpd_hazard: 0.01
+  signal_score_threshold: 2.5
+decision:
+  underage_cost: 4.0
+  overage_cost: 1.0
+  lead_time_days: 2
