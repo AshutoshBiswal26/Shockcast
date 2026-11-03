@@ -20,6 +20,16 @@ class DataConfig(BaseModel):
     geographies: list[str] = Field(default_factory=lambda: ["CA", "TX", "WI"])
 
 
+class BacktestConfig(BaseModel):
+    """Rolling-origin backtest settings (R2.1). Other keys (e.g. quantiles) pass through."""
+
+    model_config = ConfigDict(extra="allow")
+
+    horizon: int = Field(default=28, ge=1)
+    stride: int = Field(default=28, ge=1)
+    n_origins: int = Field(default=8, ge=1)
+
+
 class ShockCastConfig(BaseModel):
     """Top-level config. Sections owned by later tasks are accepted but not yet typed."""
 
@@ -27,6 +37,7 @@ class ShockCastConfig(BaseModel):
 
     seed: int = 42
     data: DataConfig = Field(default_factory=DataConfig)
+    backtest: BacktestConfig = Field(default_factory=BacktestConfig)
 
 
 def load_config(path: str | Path) -> ShockCastConfig:
